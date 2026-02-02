@@ -69,10 +69,10 @@ function updateLayer(layerKey) {
     // Animate content out
     content.style.opacity = '0';
     content.style.transform = 'translateY(10px)';
-    
+
     setTimeout(() => {
         // Build Animal Tags
-        const animalTags = data.animals.map(a => 
+        const animalTags = data.animals.map(a =>
             `<span class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-white border border-slate-200 text-sm font-medium shadow-sm">
                 <span>${a.icon}</span> ${a.name}
             </span>`
@@ -131,9 +131,9 @@ function plantTree() {
     plantCount++;
     const forestPlot = document.getElementById('forest-plot');
     const emptyState = document.getElementById('empty-state');
-    
+
     // Remove empty state text
-    if(emptyState) emptyState.style.display = 'none';
+    if (emptyState) emptyState.style.display = 'none';
 
     // Add Tree
     const tree = document.createElement('div');
@@ -143,7 +143,7 @@ function plantTree() {
     const scale = 0.8 + Math.random() * 0.4;
     const rotate = -5 + Math.random() * 10;
     tree.style.transform = `scale(${scale}) rotate(${rotate}deg)`;
-    
+
     forestPlot.appendChild(tree);
 
     // Update Meters
@@ -153,8 +153,8 @@ function plantTree() {
 function updateMeters() {
     // CO2 starts high (90%), O2 starts low (10%)
     // Goal: CO2 ~ 20%, O2 ~ 80%
-    const progress = plantCount / MAX_TREES; 
-    
+    const progress = plantCount / MAX_TREES;
+
     const co2Val = 90 - (progress * 70); // 90 -> 20
     const o2Val = 10 + (progress * 70); // 10 -> 80
 
@@ -167,7 +167,7 @@ function updateMeters() {
     o2Bar.style.width = `${o2Val}%`;
 
     // Colors change as they get better
-    if(co2Val < 40) {
+    if (co2Val < 40) {
         co2Bar.classList.replace('bg-red-500', 'bg-green-500');
         co2Text.innerText = "Safe Levels";
         co2Text.className = "text-green-300";
@@ -175,7 +175,7 @@ function updateMeters() {
         co2Text.innerText = `High (${Math.round(co2Val)}%)`;
     }
 
-    if(o2Val > 60) {
+    if (o2Val > 60) {
         o2Bar.classList.replace('bg-blue-500', 'bg-blue-300'); // lighter blue for airy feel
         o2Text.innerText = "Optimal";
         o2Text.className = "text-blue-300";
@@ -183,7 +183,7 @@ function updateMeters() {
         o2Text.innerText = `Low (${Math.round(o2Val)}%)`;
     }
 
-    if(plantCount === MAX_TREES) {
+    if (plantCount === MAX_TREES) {
         document.getElementById('plant-btn').innerHTML = '<i class="fas fa-check"></i> Forest Restored!';
         document.getElementById('plant-btn').classList.add('bg-blue-500', 'text-white');
     }
@@ -209,7 +209,7 @@ function drop(ev) {
     ev.preventDefault();
     const zone = ev.currentTarget;
     zone.classList.remove('drag-over');
-    
+
     const data = ev.dataTransfer.getData("text");
     const draggedElement = document.getElementById(data);
     draggedElement.classList.remove('dragging');
@@ -217,8 +217,9 @@ function drop(ev) {
     // Logic Check
     const correctMap = {
         'drop-producer': 'drag-grass',
-        'drop-herbivore': 'drag-deer', // or others if added
-        'drop-carnivore': 'drag-lion'
+        'drop-herbivore': 'drag-deer',
+        'drop-carnivore': 'drag-lion',
+        'drop-decomposer': 'drag-fungi'
     };
 
     if (correctMap[zone.id] === data) {
@@ -229,10 +230,10 @@ function drop(ev) {
         draggedElement.style.background = "transparent";
         zone.appendChild(draggedElement);
         zone.classList.add('bg-green-100', 'border-green-300');
-        
+
         // Disable drag on success
         draggedElement.setAttribute('draggable', 'false');
-        
+
         checkWinCondition();
     } else {
         // Fail Animation
@@ -245,8 +246,9 @@ function checkWinCondition() {
     const p = document.getElementById('drop-producer').children.length > 0;
     const h = document.getElementById('drop-herbivore').children.length > 0;
     const c = document.getElementById('drop-carnivore').children.length > 0;
+    const d = document.getElementById('drop-decomposer').children.length > 0;
 
-    if (p && h && c) {
+    if (p && h && c && d) {
         const res = document.getElementById('quiz-result');
         res.innerHTML = "🎉 Perfect! You built a complete Food Chain!";
         res.classList.remove('hidden');
