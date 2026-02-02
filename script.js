@@ -192,8 +192,10 @@ function updateMeters() {
 
 // --- Drag and Drop Quiz Logic ---
 function drag(ev) {
-    ev.dataTransfer.setData("text", ev.target.id);
-    ev.target.classList.add('dragging');
+    // Ensure we get the draggable container even if a child is clicked
+    const item = ev.target.closest('.draggable-item');
+    ev.dataTransfer.setData("text", item.id);
+    item.classList.add('dragging');
 }
 
 function allowDrop(ev) {
@@ -211,8 +213,10 @@ function drop(ev) {
     zone.classList.remove('drag-over');
 
     const data = ev.dataTransfer.getData("text");
+    if (!data) return; // Guard against empty data
+
     const draggedElement = document.getElementById(data);
-    draggedElement.classList.remove('dragging');
+    if (draggedElement) draggedElement.classList.remove('dragging');
 
     // Logic Check
     const correctMap = {
