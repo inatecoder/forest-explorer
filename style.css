@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;800&family=Fredoka:wght@400;600&display=swap');
+
+:root {
+  --primary-green: #2d5a27;
+  --secondary-green: #4ade80;
+  --accent-orange: #fb923c;
+}
+
+body {
+  font-family: 'Lexend', sans-serif;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  background-color: #f8fafc;
+}
+
+h1, h2, h3, .fun-font {
+  font-family: 'Fredoka', sans-serif;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #88c425;
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2d5a27;
+}
+
+/* Animations */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float 5s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(-2deg); }
+  50% { transform: rotate(2deg); }
+}
+
+.hover-wiggle:hover {
+  animation: wiggle 0.5s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(74, 222, 128, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); }
+}
+
+.btn-pulse {
+  animation: pulse-glow 2s infinite;
+}
+
+/* Parallax Backgrounds */
+.parallax-wrapper {
+  perspective: 1px;
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.hero-section {
+  position: relative;
+  height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: linear-gradient(135deg, #134e4a 0%, #064e3b 100%);
+}
+
+.hero-bg-pattern {
+  background-image: radial-gradient(#ffffff 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0.05;
+}
+
+/* Interactive Layer Card */
+.layer-card {
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 2px solid transparent;
+}
+.layer-card:hover {
+  transform: translateY(-5px) scale(1.02);
+  border-color: #86efac;
+}
+.active-layer {
+  border-left: 8px solid #4ade80;
+  background: linear-gradient(90deg, #f0fdf4 0%, #ffffff 100%);
+  border-color: #bbf7d0;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+}
+
+/* Game Components */
+.meter-fill {
+  transition: width 0.5s ease-out, background-color 0.3s;
+}
+
+/* Drag and Drop */
+.draggable-item {
+  cursor: grab;
+  transition: all 0.2s;
+}
+.draggable-item.dragging {
+  opacity: 0.5;
+  transform: scale(1.05);
+}
+.drop-zone {
+  transition: all 0.3s;
+  border: 3px dashed #cbd5e1;
+}
+.drop-zone.drag-over {
+  background-color: #f0fdf4;
+  border-color: #4ade80;
+  transform: scale(1.02);
+}
+
+/* Custom Tree Growth Animation */
+@keyframes grow-tree {
+  0% { transform: scaleY(0); opacity: 0; }
+  100% { transform: scaleY(1); opacity: 1; }
+}
+.tree-pop {
+  animation: grow-tree 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  transform-origin: bottom center;
+}
